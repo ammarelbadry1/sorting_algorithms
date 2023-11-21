@@ -26,11 +26,12 @@ void bubble_sort(int *array, size_t size);
 void insertion_sort_list(listint_t **list);
 void selection_sort(int *array, size_t size);
 void quick_sort(int *array, size_t size);
-int partition(int *array, int low, int high);
+int partition(int *array, int low, int high, size_t size);
 void sort(int *array, int low, int high, size_t size);
 
 /* utils */
 void check_array(int *array, size_t size);
 void check_list(listint_t *list);
+void swap_ints(int *a, int *b);
 
 #endif

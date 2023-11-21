@@ -14,34 +14,57 @@ void quick_sort(int *array, size_t size)
 }
 
 /**
+ * swap_ints - Swap two integers in an array.
+ *
+ * @a: The first integer to swap.
+ * @b: The second integer to swap.
+ *
+ * Return: no return
+ */
+void swap_ints(int *a, int *b)
+{
+	int tmp;
+
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
+
+/**
  * partition - put the pivot in its right place
  *
  * @array: the array contains the pivot
- * @low: The low bound of the array
- * @high: The high bound of the array
+ * @left: The low bound of the array
+ * @right: The high bound of the array
+ * @size: the size of the array
  *
  * Return: the index of the pivot
 */
-int partition(int *array, int low, int high)
+int partition(int *array, int left, int right, size_t size)
 {
-	int pivot = array[high];
-	int i = low - 1;
-	int j, tmp;
+	int *pivot, above, below;
 
-	for (j = low; j <= high - 1; j++)
+	pivot = array + right;
+	for (above = below = left; below < right; below++)
 	{
-		if (array[j] < pivot)
+		if (array[below] < *pivot)
 		{
-			i++;
-			tmp = array[i];
-			array[i] = array[j];
-			array[j] = tmp;
+			if (above < below)
+			{
+				swap_ints(array + below, array + above);
+				print_array(array, size);
+			}
+			above++;
 		}
 	}
-	tmp = array[i + 1];
-	array[i + 1] = array[high];
-	array[high] = tmp;
-	return (i + 1);
+
+	if (array[above] > *pivot)
+	{
+		swap_ints(array + above, pivot);
+		print_array(array, size);
+	}
+
+	return (above);
 }
 
 /**
@@ -61,8 +84,7 @@ void sort(int *array, int low, int high, size_t size)
 
 	if (low < high)
 	{
-		pivot = partition(array, low, high);
-		print_array(array, size);
+		pivot = partition(array, low, high, size);
 		sort(array, low, pivot - 1, size);
 		sort(array, pivot + 1, high, size);
 	}
